@@ -26,6 +26,8 @@ import string
 #from word_similarity import find_best_matches_from_dataframe
 from word_similarity_updated_new import find_best_matches_from_dataframe
 
+# # UPLOADING THE TEXTS (TEXT1,TEXT2....AND SO ON) FOR PATHOLOGY TEST NAME AND LABELS(TEST NAMES AS PER THE DIAGNOSTIC COMPANY)
+
 # +
 os.chdir(r'C:\Users\Admin\Test_Recommender_System\AI_Agent_type')
 
@@ -34,6 +36,9 @@ df = pd.read_csv('horizontal_input_df.csv', encoding='latin1')
 df.fillna('', inplace=True)
 #df['text'].fillna('', inplace=True)
 #df['label'].fillna('', inplace=True)
+# -
+
+# # CONVERT THE AI GENERATED RECOMMENDATIONS TO DATAFRAME OF TEST NAMES AND BLANK LABEL AND ALSO COMMA SEPRATED TEST NAMES
 
 # +
 def recommendation_converter(recommendations):
@@ -58,6 +63,10 @@ def recommendation_converter(recommendations):
     return company_test_names,company_test_names_comma_sep
     
 
+
+# -
+
+# # PACKAGE WISE DATA WITH GENDER, COMPONENTS NAME
 
 # +
 conn = mysql.connector.connect(
@@ -113,6 +122,10 @@ delimiter = '_'
 package_list_b2c = df_b2c_package_total_split.groupby(['package_name','gender'])['compts_name'].apply(lambda x: delimiter.join(x)).reset_index()
 #package_list_b2c
 # -
+
+# # MATCHING THE RECOMMENDATION TESTS WITH THAT OF PACKAGES AS AVAILABLE WITH THE DIAGNOSTIC COMPANY TO GET THE BEST MATCHED PACKAGES AND INDIVIDUAL TESTS COMBINATION
+#
+# # MATCHING CRITERIA OF MIN 50% ON PACKAGES IS CONSIDERED ALONG WITH GENDER CONSIDERATIONS
 
 # Split 'label' column in df2 into list
 def final_outcome(company_test_names_concat,gender_input):
